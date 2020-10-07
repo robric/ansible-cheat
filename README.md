@@ -9,6 +9,12 @@ Print a variable (here print all default variables)
     - debug:
         var: hostvars
 ```
+print content and vars with msg
+```
+    - name: "loop through list"
+      debug:
+        msg: "{{ (item | regex_replace('(^.*)s$', '\\1')) }}"   
+```
 
 ## File 
 
