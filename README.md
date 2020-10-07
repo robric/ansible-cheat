@@ -232,7 +232,9 @@ shell (even dirtier than command), but that's when you need some pipes
       when: "'masters' in {{group_names}}"
 ```
 
-## hostvars structure
+## Ansible Variables
+
+### Structure
 ```
     "hostvars": {
         "192.168.1.150": {
@@ -349,4 +351,20 @@ shell (even dirtier than command), but that's when you need some pipes
 [...]
     }
 }
+```
+
+### Reference to vars 
+
+Cross reference variables between hosts and get values from list 
+
+```
+    - name: create fact based on token for cross host use
+      set_fact: masterip="{{hostvars['localhost']['groups']['masters'][0]}}"
+      when: "'workers' in {{group_names}}"
+
+### Here there is a nested variable reference masterip in hostvars
+
+    - name: create fact based on token for cross host use
+      set_fact: tokenvalue="{{hostvars[masterip]['token']['stdout']}}"
+      when: "'workers' in {{group_names}}"
 ```
