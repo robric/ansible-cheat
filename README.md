@@ -186,3 +186,15 @@ command
         var: status
 ```
 
+Reboot and wait for resurrection
+
+```
+    - name: Attempting reboot
+      shell: reboot
+      async: 1200
+      poll: 0
+    - name: Waiting for resurection
+      wait_for_connection:
+        delay: 60
+        timeout: 300
+```
