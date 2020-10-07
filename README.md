@@ -155,8 +155,9 @@ apt
       with_items: "{{group_names}}"
 ```
 
-## Loops
+## Loops & conditions
 
+loops:
 ```
 - name: "loop through list"
   debug:
@@ -171,8 +172,16 @@ apt
         msg: "An item: {{ item }}"
       with_items: "{{group_names}}"
 
- ```
+```
+conditions
 
+```
+    - name: Get the cluster token (executed on master only)
+      shell: kubeadm token list | grep bootstrap | awk {'print $1'}
+      register: token
+      become: false
+      when: "'masters' in {{group_names}}"
+ ```
 ## workflow / server interaction
 
 expect
@@ -211,4 +220,12 @@ Reboot and wait for resurrection
       wait_for_connection:
         delay: 60
         timeout: 300
+```
+shell (even dirtier than command), but that's when you need some pipes
+```
+    - name: Get the cluster token 
+      shell: kubeadm token list | grep bootstrap | awk {'print $1'}
+      register: token
+      become: false
+      when: "'masters' in {{group_names}}"
 ```
