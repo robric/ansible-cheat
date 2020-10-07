@@ -232,7 +232,7 @@ shell (even dirtier than command), but that's when you need some pipes
       when: "'masters' in {{group_names}}"
 ```
 
-## hostvar structure
+## hostvars structure
 
     "hostvars": {
         "192.168.1.150": {
