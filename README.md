@@ -233,7 +233,7 @@ shell (even dirtier than command), but that's when you need some pipes
 ```
 
 ## hostvars structure
-
+```
     "hostvars": {
         "192.168.1.150": {
             "ansible_check_mode": false,
@@ -349,3 +349,4 @@ shell (even dirtier than command), but that's when you need some pipes
 [...]
     }
 }
+```
