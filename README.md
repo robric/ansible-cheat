@@ -1,6 +1,8 @@
 # Ansible Cheat List
 
-## debugs
+## main tasks 
+
+### debugs
 
 Print a variable (here print all default variables)
 ```
@@ -16,7 +18,7 @@ print content and vars with msg
         msg: "{{ (item | regex_replace('(^.*)s$', '\\1')) }}"   
 ```
 
-## File 
+### File operations
 
 read file from remote host and modify it with replace
 ```
@@ -78,7 +80,7 @@ Create a file based on curl equivalent of  "curl https://docs.projectcalico.org/
         dest: '/home/ubuntu/calico.yaml'
 ```
 
-## Kernel/Systemd
+### Kernel/Systemd
 
 restart service (systemctl start docker)
 ```
@@ -111,7 +113,7 @@ change systctl value variables + reload sysctl files
         reload: yes
 ``` 
 
-## packages
+### packages
 
 pip
 ```
@@ -143,7 +145,7 @@ apt
         update_cache: yes
         state: present
 ```
-## filter / regexps: \1 repeats matched pattern
+### filter / regexps: \1 repeats matched pattern
 ```
 - hosts: k8s_hosts
   gather_facts: no
@@ -155,7 +157,7 @@ apt
       with_items: "{{group_names}}"
 ```
 
-## Loops & conditions
+### Loops & conditions
 
 loops:
 ```
@@ -182,7 +184,7 @@ conditions
       become: false
       when: "'masters' in {{group_names}}"
  ```
-## workflow / server interaction
+### workflow / server interaction
 
 expect
 ```
@@ -229,3 +231,121 @@ shell (even dirtier than command), but that's when you need some pipes
       become: false
       when: "'masters' in {{group_names}}"
 ```
+
+## hostvar structure
+
+    "hostvars": {
+        "192.168.1.150": {
+            "ansible_check_mode": false,
+            "ansible_diff_mode": false,
+            "ansible_facts": {
+                "discovered_interpreter_python": "/usr/bin/python3"
+            },
+            "ansible_forks": 5,
+            "ansible_inventory_sources": [
+                "/root/drive/rpi/rpi/inventory.ini"
+            ],
+            "ansible_playbook_python": "/usr/bin/python3.6",
+            "ansible_run_tags": [
+                "all"
+            ],
+            "ansible_skip_tags": [],
+            "ansible_ssh_pass": "ubuntu123!",
+            "ansible_user": "ubuntu",
+            "ansible_verbosity": 3,
+            "ansible_version": {
+                "full": "2.9.13",
+                "major": 2,
+                "minor": 9,
+                "revision": 13,
+                "string": "2.9.13"
+            },
+            "discovered_interpreter_python": "/usr/bin/python3",
+            "group_names": [
+                "k8s_hosts",
+                "masters"
+            ],
+            "groups": {
+                "all": [
+                    "localhost",
+                    "192.168.1.150",
+                    "192.168.1.151"
+                ],
+                "k8s_hosts": [
+                    "192.168.1.150",
+                    "192.168.1.151"
+                ],
+                "local": [
+                    "localhost"
+                ],
+                "masters": [
+                    "192.168.1.150"
+                ],
+                "ungrouped": [],
+                "workers": [
+                    "192.168.1.151"
+                ]
+            },
+            "id": 1,
+            "inventory_dir": "/root/drive/rpi/rpi",
+            "inventory_file": "/root/drive/rpi/rpi/inventory.ini",
+            "inventory_hostname": "192.168.1.150",
+            "inventory_hostname_short": "192",
+            "omit": "__omit_place_holder__dc865134ceb59611baa3712569f17116adf23389",
+            "playbook_dir": "/root/drive/rpi/rpi",
+            "token": {
+                "ansible_facts": {
+                    "discovered_interpreter_python": "/usr/bin/python3"
+                },
+                "changed": true,
+                "cmd": "kubeadm token list | grep bootstrap | awk {'print $1'}",
+                "delta": "0:00:00.174809",
+                "end": "2020-10-07 16:42:29.093884",
+                "failed": false,
+                "rc": 0,
+                "start": "2020-10-07 16:42:28.919075",
+                "stderr": "",
+                "stderr_lines": [],
+                "stdout": "jpht4o.fn8wyac699lpixeh",
+                "stdout_lines": [
+                    "jpht4o.fn8wyac699lpixeh"
+                ]
+            }
+        },
+        "192.168.1.151": {
+ [...]
+            "group_names": [
+                "k8s_hosts",
+                "workers"
+            ],
+            "groups": {
+                "all": [
+                    "localhost",
+                    "192.168.1.150",
+                    "192.168.1.151"
+                ],
+                "k8s_hosts": [
+                    "192.168.1.150",
+                    "192.168.1.151"
+                ],
+                "local": [
+                    "localhost"
+                ],
+                "masters": [
+                    "192.168.1.150"
+                ],
+                "ungrouped": [],
+                "workers": [
+                    "192.168.1.151"
+                ]
+            },
+[...]
+        },
+        "localhost": {
+[...]
+            "group_names": [
+                "local"
+            ],
+[...]
+    }
+}
