@@ -368,3 +368,10 @@ Cross reference variables between hosts and get values from list
       set_fact: tokenvalue="{{hostvars[masterip]['token']['stdout']}}"
       when: "'workers' in {{group_names}}"
 ```
+### Make var being visible by all host
+
+``` 
+- set_fact: myvar=myvalue
+  run_once: true
+"
+```
