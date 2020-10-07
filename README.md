@@ -68,7 +68,15 @@ Create a directory
         state: directory
         mode: 0755
 ```
-
+Create a file based on curl equivalent of  "curl https://docs.projectcalico.org/manifests/calico.yaml -O"
+```
+    - name: Get Calico manifest for installation
+      uri:
+        url: 'https://docs.projectcalico.org/manifests/calico.yaml'
+        method: GET
+        creates: '/home/ubuntu/calico.yaml'
+        dest: '/home/ubuntu/calico.yaml'
+```
 
 ## Kernel/Systemd
 
